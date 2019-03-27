@@ -24,8 +24,7 @@ console.log(arrayNombres)
 const mayoreAs30 = alumnos.filter(alumno => alumno.edad > 30)
 console.log(mayoreAs30)
 // 3.
-const arrayEdades = alumnos.map(alumno => alumno.edad)
-const sumaDeEdades = arrayEdades.reduce((total,num) => total + num , 0)
+const sumaDeEdades = alumnos.map(alumno => alumno.edad).reduce((total,alumno) => total + alumno , 0)
 console.log(sumaDeEdades)
 // 4.
 const {edad:edadLeandro} = alumnos.find(alumno => alumno.nombre === "Leandro Amaro")
