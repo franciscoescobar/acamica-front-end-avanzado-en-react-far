@@ -37,24 +37,27 @@ const alumnos = [
   // 8. Obtener a partir de la constante en 3, el promedio de edad del curso dividiendo la misma por el total de alumnos
 
 // 1.
-const arrayNombres = alumnos.map(alumno => alumno.nombre)
+const arrayNombres = alumnos.map(({nombre}) => nombre)
 console.log(arrayNombres)
 // 2.
-const mayoreAs30 = alumnos.filter(alumno => alumno.edad > 30)
+const mayoreAs30 = alumnos.filter(({edad}) => edad > 30)
 console.log(mayoreAs30)
 // 3.
-const sumaDeEdades = alumnos.reduce((total,alumno) => total + alumno.edad , 0)
+const sumaDeEdades = alumnos.reduce((total,{edad}) => total + edad , 0)
 console.log(sumaDeEdades)
 // 4.
-const {edad:edadLeandro} = alumnos.find(alumno => alumno.nombre === "Leandro Amaro")
+const {edad:edadLeandro} = alumnos.find(({nombre}) => nombre === "Leandro Amaro")
 console.log(edadLeandro)
 // 5.
 const [primerAlumno] = alumnos
 const {nombre:nombrePrimerAlumno} = primerAlumno
 console.log(primerAlumno)
 console.log(nombrePrimerAlumno)
+
+const [{nombre:nombrePrimerAlumnoDos}] = alumnos
+console.log(nombrePrimerAlumnoDos)
 // 6.
-const alumnosQueEmpiezanConF = alumnos.filter(alumno => alumno.nombre[0] === 'F')
+const alumnosQueEmpiezanConF = alumnos.filter(({nombre}) => nombre[0] === 'F')
 console.log(alumnosQueEmpiezanConF)
 // 7.
 const alumnosConAsistencia = alumnos.map(alumno => {
