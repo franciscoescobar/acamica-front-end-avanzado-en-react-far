@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html lang="es">
+  <head>
+    <title>Empleados</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css" />
+
+    <style>
+      :root {
+        --grey-1: #fafafa;
+        --grey-2: #eaeaea;
+        --grey-3: #999999;
+        --grey-4: #666666;
+        --grey-5: #333333;
+        --blue: #0076ff;
+        --magenta: #ff0080;
+        --orange: #f5a623;
+        --yellow: #f8e71c;
+        --green: #50e3c2;
+      }
+      body {
+        background-color: var(--grey-2);
+      }
+      .employee-card {
+        background-color: white;
+        border-radius: 5px;
+        padding: 12px;
+        margin: 10px 0;
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: min-content 340px max-content max-content;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+
+    <script type="text/babel">
+      // 3) Ejemplo de Lista de Empleados
+      // La lista de empleados será un array de objetos con nombre, sector, avatar y id.
+      //    a. Poder elegir Empleado del Mes y mostrarlo de manera diferente
+      //        a.1 Crear un nuevo botón en EmployeeCard que sea diga "Empleado del mes"
+      //        a.2 Al hacer click ( investigar evento de React onClick ) ejecutar un método "selectMonthEmployee"
+      //        a.3 El método obtendrá el nombre de empleado y lo almacenará en el estado en una key monthEmployee
+      //        a.4 Enviar una prop nueva a EmployeeCard llamada isMonthEmployee
+      //        a.5 El valor de esta prop será igual a el nombre de empleado que estemos iterendo === monthEmployee ( del estado )
+      //        a.6 Editar el componente EmployeeCard para que reciba esta prop y de alguna manera por estilos se muestre distinto
+      //    b. Poder agregar un nuevo empleado ( LISTO )
+      //    c. Poder editar un empleado existente ( Se ve la próxima clase)
+      //    d. Poder eliminar un empleado existente
+      //        d.1 Al hacer click ( investigar evento de React onClick ) en el botón "Eliminar" ejecutar un método
+      //        d.2 El método obtendrá el id de empleado y lo buscará en el array "list" del estado
+      //        d.3 Buscar en que īndice se encuentra el empleado con ese id en particular "findIndex"
+      //        d.4 Usando el método slice() ( Investigar ) obtener un array nuevo con todos los mismos elementos pero sin el indice hallado
+      //        d.5 A este nuevo array almacenarlo en el estado en la propiedad "list"
+      //    e. Poder filtrar por departamento ( Se ve la próxima clase)
+      //    f. Poder filtrar por nombre ( Se ve la próxima clase)
+      // Diseño de Idea: https://dribbble.com/shots/6131920-Employee-page
+      class App extends React.Component {
+        constructor() {
+          super()
+          const employees = Array.from({ length: 30 }, () => ({
+            name: faker.name.findName(),
+            sector: faker.name.jobArea(),
+            avatar: faker.image.avatar(),
+            id: faker.random.uuid(),
+          }))
+          this.state = {
+            list: employees,
+            employeeName: '',
+            monthEmployee: ''
+          }
+        }
+        handleAddEmployeeSubmit = event => {
+          event.preventDefault()
+          const { list, employeeName } = this.state
+          const newEmployee = {
+            name: employeeName,
+            sector: faker.name.jobArea(),
+            avatar: faker.image.avatar(),
+            id: faker.random.uuid(),
+          }
+          const newList = [newEmployee, ...list]
+          this.setState({ list: newList })
+        }
+        handleAddEmployeeChange = event => {
+          const { value } = event.target
+          this.setState({ employeeName: value })
+        }
+        handleMonthEmployee = name => {
+            this.setState({monthEmployee: name})
+        }
+        handleRemoveEmployee = id => {
+            const userIndex = this.state.list.findIndex( element => element.id === id)
+            const halfList = this.state.list.slice(0,userIndex)
+            const secondHalfList = this.state.list.slice(userIndex + 1, this.state.list.length)
+            const newList = halfList.concat(secondHalfList)
+            this.setState({list: newList})
+        }
+        render() {
+          return (
+            <div className='container'>
+              <h1 className='is-size-1'>Lista de Empleados</h1>
+              <form onSubmit={this.handleAddEmployeeSubmit}>
+                <input
+                  className='input'
+                  type='text'
+                  value={this.state.newEmployee}
+                  onChange={this.handleAddEmployeeChange}
+                />
+                <button className='button is-success' type='submit'>
+                  Agregar Empleado
+                </button>
+              </form>
+              {this.state.list.map(employee => (
+                <EmployeeCard employeeData={employee} key={employee.id} selectMonthEmployee={this.handleMonthEmployee} isMonthEmployee={employee.name === this.state.monthEmployee} removeEmployee={this.handleRemoveEmployee} />
+              ))}
+            </div>
+          )
+        }
+      }
+      const EmployeeCard = props => {
+        const {avatar, name, sector, id} = props.employeeData
+        const {isMonthEmployee} = props
+        const selectMonthEmployee = () => props.selectMonthEmployee(name)
+        const removeEmployee = () => props.removeEmployee(id)
+        return (
+          <div className={ isMonthEmployee ? 'employee-card has-background-warning' : 'employee-card '} >
+            <figure className='image is-64x64'>
+              <img className='is-rounded' src={avatar} />
+            </figure>
+            <div>
+              <h2 className='is-size-3'>{name}</h2>
+              <h3 className='is-family-monospace'>{sector}</h3>
+            </div>
+            <button className='button is-primary'>
+              <span className='icon is-small'>
+                <i className='fas fa-edit' />
+              </span>
+              <span>Editar</span>
+            </button>
+            <button className='button is-info' onClick={selectMonthEmployee}>
+              <span className='icon is-small'>
+                <i className='fas fa-user' />
+              </span>
+              <span>Empleado del mes</span>
+            </button>
+            <button className='button is-danger is-outlined' onClick={removeEmployee}>
+              <span className='icon is-small'>
+                <i className='fas fa-times' />
+              </span>
+              <span>Eliminar</span>
+            </button>
+          </div>
+        )
+      }
+      ReactDOM.render(<App />, document.querySelector('#app'))
+    </script>
+  </body>
+</html>
