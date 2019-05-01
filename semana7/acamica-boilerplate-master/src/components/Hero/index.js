@@ -8,9 +8,9 @@ export const Hero = (props) => {
                 <h1 className="title">Hoteles</h1>
                 <h2 className="subtitle">
                     desde el <strong>{filters.dateFrom.toLocaleDateString()}</strong> hasta el <strong>{filters.dateTo.toLocaleDateString()}</strong>
-                    {filters.country ? ` en ${filters.country}` : ''}
-                    {filters.price ? ` por  ${filters.price}` : ''}
-                    {filters.rooms ? ` de hasta ${filters.rooms} habitaciones` : ''}
+                    {filters.country && filters.country !== 'Todos los países' ? ` en ${filters.country}` : ''}
+                    {filters.price && filters.price !== 'Cualquier precio' ? ` por  ${filters.price}` : ''}
+                    {filters.rooms && filters.rooms !== 'Cualquier tamaño' ? ` de hasta ${filters.rooms} habitaciones` : ''}
                 </h2>
                 </div>
             </div>
