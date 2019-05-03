@@ -15,39 +15,44 @@ const App = () => {
             price: undefined,
             rooms: undefined
             },
-            hotels: []
+            hotels: [],
+            loading: true
         }
     )
-    
+    const {filters, hotels, loading} = state    
     const fetchUrl = async () => {
-        const response = await fetch('https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica');
-        const json = await response.json();
-    
-        setState({hotels: json});
+        try {
+            const response = await fetch('https://wt-8a099f3e7c73b2d17f4e018b6cfd6131-0.sandbox.auth0-extend.com/acamica')
+            const json = await response.json()
+            setState({hotels: json, loading: false})
+
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
     
     useEffect(() => {
         fetchUrl();
     }, []);
 
+
     const handleFilterChange = (payload) => {
         setState({
             filters: payload
         })
     }
-    
-      
-    const {filters, hotels} = state    
     const filterHotelsByCountry = hotels.filter(hotel => hotel.country === filters.country || filters.country === undefined || filters.country === 'Todos los países')
     const filterHotelsByPrice = filterHotelsByCountry.filter(hotel => hotel.price == filters.price || filters.price === undefined || filters.price === 'Cualquier precio')
     const filterHotelsByRooms = filterHotelsByPrice.filter(hotel => (filters.rooms - 10 <= hotel.rooms && hotel.rooms <= filters.rooms) || filters.rooms === undefined || filters.rooms === 'Cualquier tamaño')
     const filteredHotels = filterHotelsByRooms.filter(hotel => hotel.availabilityFrom <= filters.dateFrom && hotel.availabilityTo >= filters.dateTo)
 
+   
     return (
         <div>
             <Hero filters={ filters } />
             <Filters filters={ filters } onFilterChange={handleFilterChange} />
-            <Hotels hotels={filteredHotels}/>
+            <Hotels hotels={filteredHotels} loading={loading}/>
         </div>
     )
     

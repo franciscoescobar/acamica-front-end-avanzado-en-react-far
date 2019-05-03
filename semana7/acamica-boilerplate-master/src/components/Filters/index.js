@@ -5,27 +5,27 @@ import {OptionsFilter} from '../OptionsFilter'
 export const Filters = (props) => {
     
     const handleDateChange = (event) => {
-        let payload = props.filters
+        const {filters, onFilterChange} = props
         const newDate = new Date(event.target.value+ 'T01:00:00')
-        if(event.target.name === 'dateFrom' && payload['dateTo'] > newDate) {
-            payload[event.target.name] = newDate
-            props.onFilterChange(payload)
+        if(event.target.name === 'dateFrom' && filters['dateTo'] > newDate) {
+            const payload = { ...filters, [event.target.name]: newDate}
+            onFilterChange(payload)
         }
-        else if (event.target.name === 'dateTo' && payload['dateFrom'] > newDate) {
-            payload[event.target.name] = newDate
-            payload['dateFrom'] = newDate
-            props.onFilterChange(payload)
+        else if (event.target.name === 'dateTo' && filters['dateFrom'] > newDate) {
+            const payload = { ...filters, [event.target.name]: newDate, ['dateFrom']: newDate}
+            onFilterChange(payload)
         }
         else if (event.target.name === 'dateTo') {
-            payload[event.target.name] = newDate
-            props.onFilterChange(payload)
+            const payload = { ...filters, [event.target.name]: newDate}
+            onFilterChange(payload)
         }
         
     }
     const handleOptionChange = (event) => {
-        let payload = props.filters
-        payload[event.target.name] = event.target.value
-        props.onFilterChange(payload)
+        const { filters, onFilterChange } = props
+        const payload = { ...filters, [event.target.name]: event.target.value }
+
+        onFilterChange(payload)
     }
 
     const {dateFrom, dateTo, country, price, rooms} = props.filters
