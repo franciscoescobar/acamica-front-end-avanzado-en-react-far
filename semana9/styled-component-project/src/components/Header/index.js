@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderWrapper, HeaderTitle, HeaderAvatar, image } from "./styled";
+import { HeaderWrapper, HeaderTitle, HeaderAvatar } from "./styled";
 
 const Header = ({ image }) => (
   <div>
