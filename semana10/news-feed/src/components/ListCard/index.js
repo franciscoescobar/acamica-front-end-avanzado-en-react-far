@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  Media,
-  MediaLeft,
-  MediaContent,
-  Content,
-  Level,
-  LevelLeft,
-  LevelItem,
-  Icon
-} from "bloomer";
+import { Media, MediaLeft, MediaContent, Content } from "bloomer";
 import styled from "styled-components";
 const ListWrapper = styled.a`
   margin-bottom: 20px;
@@ -47,29 +38,10 @@ const ListCard = ({ noticia }) => {
         >
           <Content style={{ flex: 1 }}>
             <h4>{noticia.title}</h4>
-            <p>{`${new Date(noticia.date).getHours()}:${new Date(
+            <small>{`${new Date(noticia.date).getHours()}:${new Date(
               noticia.date
-            ).getMinutes()} | ${noticia.source_name}`}</p>
+            ).getMinutes()} | ${noticia.source_name}`}</small>
           </Content>
-          <Level isMobile>
-            <LevelLeft>
-              <LevelItem href="#">
-                <Icon isSize="small">
-                  <span className="fa fa-reply" aria-hidden="true" />
-                </Icon>
-              </LevelItem>
-              <LevelItem href="#">
-                <Icon isSize="small">
-                  <span className="fa fa-retweet" aria-hidden="true" />
-                </Icon>
-              </LevelItem>
-              <LevelItem href="#">
-                <Icon isSize="small">
-                  <span className="fa fa-heart" aria-hidden="true" />
-                </Icon>
-              </LevelItem>
-            </LevelLeft>
-          </Level>
         </MediaContent>
       </Media>
     </ListWrapper>

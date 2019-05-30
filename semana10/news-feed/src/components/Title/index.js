@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledTitle, StyledDivider } from "./styled";
+import { StyledTitle } from "./styled";
 
 const Title = ({ title }) => (
   <>

@@ -29,7 +29,7 @@ const Header = ({ history }) => {
     <StyledHeader>
       <LogoTitle>Canillitapp</LogoTitle>
       <StyledLink to="/">
-        <img src="https://www.canillitapp.com/static/icon.png" />
+        <img src="https://www.canillitapp.com/static/icon.png" alt="logo" />
       </StyledLink>
       <StyledSpan className="icon" onClick={handleIconClick}>
         <i className="fa fa-search" />

@@ -4,7 +4,7 @@ import Title from "../../components/Title";
 import TabBar from "../../components/TabBar";
 const Category = ({ match }) => {
   const [news, setNews] = useState([]);
-  const [categories, setCategories] = useState([
+  const [categories] = useState([
     { id: 1, name: "Política" },
     { id: 2, name: "Internacionales" },
     { id: 3, name: "Tecnología" },
