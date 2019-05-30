@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, TabList, Tab } from "bloomer";
 import { Link } from "react-router-dom";
-
+import PropTypes from "prop-types";
 const TabBar = ({ selectedCategory }) => (
   <Tabs
     isAlign="centered"
@@ -29,5 +29,7 @@ const TabBar = ({ selectedCategory }) => (
     </TabList>
   </Tabs>
 );
-
+TabBar.propTypes = {
+  selectedCategory: PropTypes.string.isRequired
+};
 export default TabBar;

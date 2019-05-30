@@ -1,9 +1,7 @@
 import React from "react";
 import { Media, MediaLeft, MediaContent, Content } from "bloomer";
-import styled from "styled-components";
-const ListWrapper = styled.a`
-  margin-bottom: 20px;
-`;
+import PropTypes from "prop-types";
+import { ListWrapper } from "./styled";
 
 const ListCard = ({ noticia }) => {
   return (
@@ -47,5 +45,13 @@ const ListCard = ({ noticia }) => {
     </ListWrapper>
   );
 };
-
+ListCard.propTypes = {
+  noticia: PropTypes.shape({
+    date: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    img_url: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    source_name: PropTypes.string.isRequired
+  }).isRequired
+};
 export default ListCard;
