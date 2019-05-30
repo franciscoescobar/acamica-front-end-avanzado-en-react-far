@@ -38,7 +38,7 @@ const Category = ({ match }) => {
       <TabBar selectedCategory={selectedCategory} />
       <Title title={`${selectedCategory}`} />
       <LoadingBar loading={loading} />
-      <List noticias={news} />
+      {error ? <h1>{error}</h1> : <List noticias={news} />}
     </div>
   );
 };

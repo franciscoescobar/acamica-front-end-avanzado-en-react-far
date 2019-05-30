@@ -30,7 +30,7 @@ const Home = () => {
       <TabBar selectedCategory="Home" />
       <Title title="Hoy" />
       <LoadingBar loading={loading} />
-      <Grid noticias={news} />
+      {error ? <h1>{error}</h1> : <Grid noticias={news} />}
     </div>
   );
 };

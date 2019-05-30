@@ -31,7 +31,7 @@ const Search = ({ match }) => {
       <TabBar />
       <Title title={`Resultados para: ${match.params.query}`} />
       <LoadingBar loading={loading} />
-      <List noticias={news} />
+      {error ? <h1>{error}</h1> : <List noticias={news} />}
     </div>
   );
 };
