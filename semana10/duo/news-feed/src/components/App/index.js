@@ -1,7 +1,11 @@
 import React from "react";
-
+import TabBar from "../TabBar";
 function App() {
-  return <div className="App" />;
+  return (
+    <div className="App">
+      <TabBar />
+    </div>
+  );
 }
 
 export default App;
